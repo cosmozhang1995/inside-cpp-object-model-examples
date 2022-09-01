@@ -1,0 +1,6 @@
+According to the book, except for empty classes, compilers may add paddings in classes for convenience of alignment. And the alignment is usually the bits of the CPU architecture. For example, on X86 architecture, classes are aligned to 4 bytes. While on X64 architecture, classes are aligned to 8 bytes.
+
+However, GCC seems not to be following this convention. According to our test, we have several conclusions:
+1. Basic-element-type members are arranged in the order that they are declared.
+2. Basic-element-type members' addresses are aligned to the sizes of ther types, i.e., an address of a `long long` member is always divisible by 8, an address of a `int` member is always divisible by 4 and an address of a `short` is always divisible by 2.
+3. According to the above 2 rules, we can infer that, alignments are not about the architecture, but about the size of largest single basic-element-type member. For example, if a class contains only `char` members, there are no paddings no matter how many `char`s are there. While if a class contains a `short` member which is 2-byte, it's aligned to 2 bytes, no matter how many `short`s and `char`s. And for a class containing `int` and `long long`, the aligments are 4 bytes and 8 bytes respectively. And this rule is also verified by our test.
