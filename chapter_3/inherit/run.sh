@@ -26,3 +26,7 @@ echo -e "\n"
 echo "Multi inherit. Without virtual functions:"
 g++ test_multi_inherit.cpp -o test && ./test
 echo -e "\n"
+
+echo "Virtual inherit:"
+g++ test_virtual_inherit.cpp -o test && ./test
+echo -e "\n"
