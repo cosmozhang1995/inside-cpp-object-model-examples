@@ -1,15 +1,16 @@
 #include <stdio.h>
+#include "print_data.h"
 
 class A {
 public:
         A() : _a(1) {}
         int _a;
-#ifdef WITH_VIRTUAL_FUNCTIONS
+#ifdef WITH_VIRTUAL_FUNCTION_A
         virtual int a();
 #endif
 };
 
-#ifdef WITH_VIRTUAL_FUNCTIONS
+#ifdef WITH_VIRTUAL_FUNCTION_A
 int A::a() { return _a; }
 #endif
 
@@ -17,12 +18,12 @@ class B {
 public:
         B() : _b(2) {}
         int _b;
-#ifdef WITH_VIRTUAL_FUNCTIONS
+#ifdef WITH_VIRTUAL_FUNCTION_B
         virtual int b();
 #endif
 };
 
-#ifdef WITH_VIRTUAL_FUNCTIONS
+#ifdef WITH_VIRTUAL_FUNCTION_B
 int B::b() { return _b; }
 #endif
 
@@ -32,14 +33,7 @@ public:
         int _c;
 };
 
-template<typename T>
-inline void print_data(T *obj) {
-    size_t sz = sizeof(T) / sizeof(int);
-    int *ptr = reinterpret_cast<int *>(obj);
-    for (size_t i = 0; i < sz; i++) {
-        printf("\t%02x: 0x%08x\n", static_cast<int>(i * sizeof(int)), ptr[i]);
-    }
-}
+
 
 int main(int argc, char *argv[])
 {
